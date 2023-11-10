@@ -62,8 +62,14 @@ void display_list(const List& L) {
 
 
 bool is_member(const List& L, int n) {
-    // ADD cCODE;
-	
+    // ADD CODE;
+    if (is_empty(L) != true) {
+        for (Node* ptr = L.head->next; ptr != nullptr; ptr = ptr->next) {
+            if (ptr->value == n) {
+                return true;
+            }
+        }
+    }
 	return false;
 }
 
@@ -71,6 +77,28 @@ bool is_member(const List& L, int n) {
 // If n is not in the list L then L is not modified
 void remove(List& L, int n) {
    // ADD CODE
+
+
+ /*   if (is_member(L, n)) {
+        for (Node* ptr = L.head->next; ptr != nullptr; ptr = ptr->next) {
+            if (ptr->next->value == n && ptr->next != nullptr) {
+                Node* ptr1 = ptr;
+                Node* ptr2 = ptr1->next;
+                ptr1->next = ptr2->next;
+                delete ptr2;
+            }
+        }
+    }*/
+
+    if (is_member(L, n)) {
+        for (Node* ptr = L.head->next; ptr != nullptr; ptr = ptr->next) {
+            if (ptr->next->value == n && ptr->next != nullptr) {
+                Node* ptrDelete = ptr->next;
+                ptr = ptrDelete->next;
+                delete ptrDelete;
+            }
+        }
+    }
 }
 
 // Insert n in the end of the list
