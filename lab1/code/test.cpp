@@ -182,6 +182,7 @@ int main() {
         assert(S1.cardinality() == 4);
 
         std::vector<int> A2{3, 5};
+
         Set S2{A2};
         assert(Set::get_count_nodes() == 8);
 

@@ -118,14 +118,52 @@ bool Set::empty() const {
 // Test if x is an element of the set
 bool Set::member(int x) const {
     // ADD CODE
+
+    Node* ptr = head;
+    while (ptr->next != nullptr) {
+        if (ptr->next->value == x) {
+            return true;
+        }
+        else {
+            ptr = ptr->next;
+        }
+    }
+
     return false;  // delete, if needed
 }
 
 // Return true, if *this is a subset of Set b
 // Otherwise, false is returned
-bool Set::is_subset(const Set& b) const {
+bool Set::is_subset(const Set& b) const { //b är S
     // ADD CODE
-    return false;  // delete, if needed
+
+    Node* ptr = head->next; //första noden, inte dummy
+    Node* ptr2 = b.head->next;
+    bool subset = false;
+
+    if (ptr == nullptr) {
+        subset = true;
+    }
+
+    if (counter > b.counter) {
+        return false;
+    }
+
+    while (ptr != nullptr) {
+        while (ptr2 != nullptr) {
+            if (ptr->value == ptr2->value) {
+                ptr = ptr->next;
+                subset = true;
+                break;
+            }
+            else {
+                ptr2 = ptr2->next;
+                subset = false;
+            }
+        }
+        return subset;
+    }
+    return subset;
 }
 
 // Return a new Set representing the union of Sets *this and b
@@ -133,6 +171,38 @@ bool Set::is_subset(const Set& b) const {
 // Implement an algorithm similar to the one in exercise 3/Set 1, but don't use vectors
 Set Set::set_union(const Set& b) const {
     // ADD CODE
+
+    Node* ptr = head->next; //första noden, inte dummy
+    int count1 = 0;
+
+    Set S3{b};
+    ptr = ptr -> next;
+
+    Node* ptr3 = S3.head->next;
+
+
+
+
+    while (ptr!=nullptr) {
+        if (ptr->value < ptr3->value) {
+            Node* n = new Node(ptr->value, ptr3->next);
+            ptr3->next = n;
+            S3.counter++;
+            break;
+        }
+        else if (ptr->value > ptr3->value) {
+            ptr3 = ptr3->next;
+        }
+        else if (ptr->value == ptr3->next->value) {
+            break;
+        }
+    }
+
+    if (ptr->next == nullptr) {
+
+    }
+
+
     return Set{};  // delete, if needed
 }
 
