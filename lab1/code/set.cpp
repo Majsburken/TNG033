@@ -25,7 +25,8 @@ Set::Set() : head{new Node{}}, counter{0} {  // create the dummy node
 
 // Constructor for creating a singleton {x}
 Set::Set(int x) : Set() {
-    // ADD CODE
+    head->next = new Node(x, nullptr);
+    counter++;
 }
 
 // Constructor: create a set with elements
@@ -35,17 +36,53 @@ Set::Set(const std::vector<int>& elements) : Set() {
     * Sorting a vector cannot used here
     * std::sort and std::unique cannot be used
     */
+   
+    for (int x : elements) {
+        Node* ptr = head; //pekar på dummy node
+        while (ptr->next != nullptr) {
+            if (x < ptr->next->value) {
+                Node* n = new Node(x, ptr->next);
+                ptr->next = n;
+                counter++;
+                break;
+            }
+            else if (x > ptr->next->value) {
+                ptr = ptr->next;
+            }
+            else if (x == ptr->next->value) {
+                break;
+            }
+        }
+        if (ptr->next == nullptr) {
+            ptr->next = new Node(x, nullptr);
+            counter++;
+        }
+    }
     // ADD CODE
 }
 
 // copy constructor
 Set::Set(const Set& rhs) : Set() {
     // ADD CODE
+    Node* ptr1 = rhs.head->next;
+    Node* ptr2 = head;
+
+    while (ptr1 != nullptr) {
+
+        ptr2->next = new Node(ptr1->value, nullptr);
+ 
+        ptr1 = ptr1->next;
+        ptr2 = ptr2->next;
+    }
+
+    counter = rhs.counter;
 }
 
 // Assignment operator: use copy-and-swap idiom
 Set& Set::operator=(Set rhs) {
     // ADD CODE
+    std::swap(head, rhs.head);
+    std::swap(counter, rhs.counter);
 
     return *this;
 }
@@ -53,19 +90,29 @@ Set& Set::operator=(Set rhs) {
 // Destructor: deallocate all nodes
 Set::~Set() {
     // ADD CODE
+
+    Node* ptr = head; //pekar på dummy
+
+    while (head!=nullptr) {
+        ptr = head->next;
+        delete head;
+        head = ptr;
+    }
+
 }
 
 // Return number of elements in the set
 std::size_t Set::cardinality() const {
     // ADD CODE
-    return 0;  // delete, if needed
+    return counter;
 }
 
 // Test if set is empty
 bool Set::empty() const {
-    // ADD CODE
-    return true;  // delete, if needed
-
+    if (counter == 0) {
+        return true;
+    }
+    return false;
 }
 
 // Test if x is an element of the set
