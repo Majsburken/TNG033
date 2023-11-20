@@ -25,8 +25,12 @@ Set::Set() : head{new Node{}}, counter{0} {  // create the dummy node
 
 // Constructor for creating a singleton {x}
 Set::Set(int x) : Set() {
-    head->next = new Node(x, nullptr);
-    counter++;
+
+    Node* s = new Node;
+    s->value = x;
+    if (get_count_nodes() > 0) {
+        s->next = nullptr;
+    }
 }
 
 // Constructor: create a set with elements
@@ -38,7 +42,7 @@ Set::Set(const std::vector<int>& elements) : Set() {
     */
    
     for (int x : elements) {
-        Node* ptr = head; //pekar på dummy node
+        Node* ptr = head; //pekar pï¿½ dummy node
         while (ptr->next != nullptr) {
             if (x < ptr->next->value) {
                 Node* n = new Node(x, ptr->next);
@@ -59,6 +63,9 @@ Set::Set(const std::vector<int>& elements) : Set() {
         }
     }
     // ADD CODE
+    for (int i : elements) {
+        Set(i);
+    }
 }
 
 // copy constructor
@@ -91,7 +98,7 @@ Set& Set::operator=(Set rhs) {
 Set::~Set() {
     // ADD CODE
 
-    Node* ptr = head; //pekar på dummy
+    Node* ptr = head; //pekar pï¿½ dummy
 
     while (head!=nullptr) {
         ptr = head->next;
@@ -109,10 +116,12 @@ std::size_t Set::cardinality() const {
 
 // Test if set is empty
 bool Set::empty() const {
-    if (counter == 0) {
+    // ADD CODE
+    if (get_count_nodes == 0) {
         return true;
     }
-    return false;
+    return false;  // delete, if needed
+
 }
 
 // Test if x is an element of the set
@@ -134,10 +143,10 @@ bool Set::member(int x) const {
 
 // Return true, if *this is a subset of Set b
 // Otherwise, false is returned
-bool Set::is_subset(const Set& b) const { //b är S
+bool Set::is_subset(const Set& b) const { //b ï¿½r S
     // ADD CODE
 
-    Node* ptr = head->next; //första noden, inte dummy
+    Node* ptr = head->next; //fï¿½rsta noden, inte dummy
     Node* ptr2 = b.head->next;
     bool subset = false;
 
@@ -172,7 +181,7 @@ bool Set::is_subset(const Set& b) const { //b är S
 Set Set::set_union(const Set& b) const {
     // ADD CODE
 
-    Node* ptr = head->next; //första noden, inte dummy
+    Node* ptr = head->next; //fï¿½rsta noden, inte dummy
     int count1 = 0;
 
     Set S3{b};
