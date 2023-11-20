@@ -173,37 +173,35 @@ Set Set::set_union(const Set& b) const {
     // ADD CODE
 
     Node* ptr = head->next; //första noden, inte dummy
-    int count1 = 0;
-
     Set S3{b};
-    ptr = ptr -> next;
+    //ptr = ptr -> next;
 
-    Node* ptr3 = S3.head->next;
+    Node* ptr3 = S3.head->next; //första noden, inte dummy för S3
 
-
-
-
-    while (ptr!=nullptr) {
+    while (ptr!=nullptr && ptr3!=nullptr) {
         if (ptr->value < ptr3->value) {
-            Node* n = new Node(ptr->value, ptr3->next);
-            ptr3->next = n;
+            Node* n = new Node(ptr->value, ptr3);
+            ptr3 = n;
+            ptr3 = ptr3->next;
             S3.counter++;
-            break;
+            ptr = ptr->next;
         }
         else if (ptr->value > ptr3->value) {
             ptr3 = ptr3->next;
         }
         else if (ptr->value == ptr3->next->value) {
-            break;
+            ptr3 = ptr3->next;
+            ptr = ptr->next;
         }
     }
 
-    if (ptr->next == nullptr) {
-
+    while (ptr != nullptr) {
+		ptr3 = new Node(ptr->value, nullptr);
+		S3.counter++;
+        ptr = ptr->next;
     }
 
-
-    return Set{};  // delete, if needed
+    return S3;  // delete, if needed
 }
 
 // Return a new Set representing the intersection of Sets *this and b
