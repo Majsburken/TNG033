@@ -196,7 +196,7 @@ Set Set::set_union(const Set& b) const {
 
 
         }
-        else if (ptr->value == ptr3->value) {
+        else /*if (ptr->value == ptr3->value)*/ {
             ptr3 = ptr3->next;
             ptr = ptr->next;
 			std::cout << "EQUAL\n";
