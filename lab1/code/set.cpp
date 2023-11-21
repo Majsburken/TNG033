@@ -233,4 +233,19 @@ std::ostream& operator<<(std::ostream& os, const Set& rhs) {
 }
 
 /********** Private member functions ************/
+void Set::insert(Node* p, int value) {
+    Node* ptr = p;
+
+    if (ptr != nullptr) {
+        Node* newNode = new Node;
+        newNode->value = value;
+        newNode->next = ptr->next;
+        ptr->next = newNode;
+    }
+}
+
+void Set::remove(Node* p) {
+
+}
+
 
