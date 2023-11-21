@@ -81,4 +81,13 @@ private:
     friend std::ostream& operator<<(std::ostream& os, const Set& rhs);
 
     /* Add Auxiliarly functions, if needed */
+
+    void insert(Node* p, int value);
+
+    void remove(Node* p);
+
+
+
+
+
 };
