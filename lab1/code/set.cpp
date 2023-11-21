@@ -177,28 +177,44 @@ Set Set::set_union(const Set& b) const {
     //ptr = ptr -> next;
 
     Node* ptr3 = S3.head->next; //första noden, inte dummy för S3
+	std::cout << "S3 counter FÖRST: " << S3.counter << "\n";
 
     while (ptr!=nullptr && ptr3!=nullptr) {
         if (ptr->value < ptr3->value) {
-            Node* n = new Node(ptr->value, ptr3);
-            ptr3 = n;
-            ptr3 = ptr3->next;
-            S3.counter++;
+
+            std::cout << "ptr->value: " << ptr->value << "\n";
+            std::cout << "ptr3->value: " << ptr3->value << "\n";
+
+            S3.insert(ptr3, ptr->value);
             ptr = ptr->next;
+			std::cout << "less than\n";
+
         }
         else if (ptr->value > ptr3->value) {
             ptr3 = ptr3->next;
+			std::cout << "GREATER\n";
+
+
         }
-        else if (ptr->value == ptr3->next->value) {
+        else if (ptr->value == ptr3->value) {
             ptr3 = ptr3->next;
             ptr = ptr->next;
+			std::cout << "EQUAL\n";
+
+
         }
+        std::cout << "Let me out!!!!!\n";
+		std::cout << "S3 counter: " << S3.counter << "\n";
+
     }
+	std::cout << "im out\n";
 
     while (ptr != nullptr) {
-		ptr3 = new Node(ptr->value, nullptr);
-		S3.counter++;
-        ptr = ptr->next;
+		//ptr3 = new Node(ptr->value, nullptr);
+		//S3.counter++;
+  //      ptr = ptr->next;
+        S3.insert(nullptr, ptr->value);
+		ptr = ptr->next;
     }
 
     return S3;  // delete, if needed
@@ -241,11 +257,16 @@ void Set::insert(Node* p, int value) {
         newNode->value = value;
         newNode->next = ptr->next;
         ptr->next = newNode;
+        counter++;
     }
+
 }
 
 void Set::remove(Node* p) {
-
+    Node* ptr1 = p;
+    Node* ptr2 = ptr1->next;
+    ptr1->next = ptr2->next;
+    delete ptr2;
+    counter--;
 }
-
 
