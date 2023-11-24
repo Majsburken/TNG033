@@ -82,12 +82,12 @@ private:
 
     /* Add Auxiliarly functions, if needed */
 
-    void insert(Node* p, int value);
+    void insert_after(Node* p, int value);
+
+    void insert_last(int value);
 
     void remove(Node* p);
 
-   
-
-
+    void display() const;
 
 };

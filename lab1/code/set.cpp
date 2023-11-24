@@ -1,4 +1,4 @@
-#include "set.hpp"
+﻿#include "set.hpp"
 
 #include <algorithm>  //std::swap
 
@@ -38,7 +38,7 @@ Set::Set(const std::vector<int>& elements) : Set() {
     */
    
     for (int x : elements) {
-        Node* ptr = head; //pekar p� dummy node
+        Node* ptr = head; //pekar på dummy node
         while (ptr->next != nullptr) {
             if (x < ptr->next->value) {
                 Node* n = new Node(x, ptr->next);
@@ -58,7 +58,6 @@ Set::Set(const std::vector<int>& elements) : Set() {
             counter++;
         }
     }
-    // ADD CODE
 }
 
 // copy constructor
@@ -68,42 +67,32 @@ Set::Set(const Set& rhs) : Set() {
     Node* ptr2 = head;
 
     while (ptr1 != nullptr) {
-
         ptr2->next = new Node(ptr1->value, nullptr);
- 
         ptr1 = ptr1->next;
         ptr2 = ptr2->next;
     }
-
     counter = rhs.counter;
 }
 
 // Assignment operator: use copy-and-swap idiom
 Set& Set::operator=(Set rhs) {
-    // ADD CODE
     std::swap(head, rhs.head);
     std::swap(counter, rhs.counter);
-
     return *this;
 }
 
 // Destructor: deallocate all nodes
 Set::~Set() {
-    // ADD CODE
-
-    Node* ptr = head; //pekar p� dummy
-
+    Node* ptr = head; //pekar på dummy
     while (head!=nullptr) {
         ptr = head->next;
         delete head;
         head = ptr;
     }
-
 }
 
 // Return number of elements in the set
 std::size_t Set::cardinality() const {
-    // ADD CODE
     return counter;
 }
 
@@ -117,8 +106,6 @@ bool Set::empty() const {
 
 // Test if x is an element of the set
 bool Set::member(int x) const {
-    // ADD CODE
-
     Node* ptr = head;
     while (ptr->next != nullptr) {
         if (ptr->next->value == x) {
@@ -128,16 +115,13 @@ bool Set::member(int x) const {
             ptr = ptr->next;
         }
     }
-
-    return false;  // delete, if needed
+    return false;
 }
 
 // Return true, if *this is a subset of Set b
 // Otherwise, false is returned
-bool Set::is_subset(const Set& b) const { //b �r S
-    // ADD CODE
-
-    Node* ptr = head->next; //f�rsta noden, inte dummy
+bool Set::is_subset(const Set& b) const { //b är S
+    Node* ptr = head->next; //första noden, inte dummy
     Node* ptr2 = b.head->next;
     bool subset = false;
 
@@ -170,66 +154,90 @@ bool Set::is_subset(const Set& b) const { //b �r S
 // Repeated values are not allowed
 // Implement an algorithm similar to the one in exercise 3/Set 1, but don't use vectors
 Set Set::set_union(const Set& b) const {
-    // ADD CODE
+    Set S3{};
+    Node* ptr = head->next; //första noden, inte dummy
+    Node* ptrb = b.head->next; //första noden, inte dummy för b
+    Node* ptr3 = S3.head; //pekar på dummy
 
-    Node* ptr = head->next; //f�rsta noden, inte dummy
-    Set S3{b};
-    //ptr = ptr -> next;
-
-    Node* ptr3 = S3.head->next; //f�rsta noden, inte dummy f�r S3
-	std::cout << "S3 counter F�RST: " << S3.counter << "\n";
-
-    while (ptr!=nullptr && ptr3!=nullptr) {
-        if (ptr->value < ptr3->value) {
-
-            std::cout << "ptr->value: " << ptr->value << "\n";
-            std::cout << "ptr3->value: " << ptr3->value << "\n";
-
-            S3.insert(ptr3, ptr->value);
+    while (ptr != nullptr && ptrb != nullptr) {
+        if (ptr->value < ptrb->value) {
+            S3.insert_last(ptr->value);
             ptr = ptr->next;
-			std::cout << "less than\n";
-
         }
-        else if (ptr->value > ptr3->value) {
-            ptr3 = ptr3->next;
-			std::cout << "GREATER\n";
-
-
+        else if (ptr->value > ptrb->value) {
+            S3.insert_last(ptrb->value);
+            ptrb = ptrb->next;
         }
-        else /*if (ptr->value == ptr3->value)*/ {
-            ptr3 = ptr3->next;
+        else {
+            S3.insert_last(ptrb->value);
             ptr = ptr->next;
-			std::cout << "EQUAL\n";
-
-
+            ptrb = ptrb->next;
         }
-        std::cout << "Let me out!!!!!\n";
-		std::cout << "S3 counter: " << S3.counter << "\n";
-
     }
-	std::cout << "im out\n";
 
     while (ptr != nullptr) {
-		//ptr3 = new Node(ptr->value, nullptr);
-		//S3.counter++;
-  //      ptr = ptr->next;
-        S3.insert(nullptr, ptr->value);
-		ptr = ptr->next;
+        S3.insert_last(ptr->value);
+        ptr = ptr->next;
     }
 
-    return S3;  // delete, if needed
+    while (ptrb != nullptr) {
+        S3.insert_last(ptrb->value);
+        ptrb = ptrb->next;
+    }
+    return S3;
 }
 
 // Return a new Set representing the intersection of Sets *this and b
 Set Set::set_intersection(const Set& b) const {
-    // ADD CODE
-    return Set{};  // delete, if needed
+    Set S3{};
+    Node* ptr = head->next; //första noden, inte dummy
+    Node* ptrb = b.head->next; //första noden, inte dummy för b
+    Node* ptr3 = S3.head; //pekar på dummy
+
+    while (ptr != nullptr && ptrb != nullptr) {
+        if (ptr->value < ptrb->value) {
+            ptr = ptr->next;
+        }
+        else if (ptr->value > ptrb->value) {
+            ptrb = ptrb->next;
+        }
+        else {
+            S3.insert_last(ptrb->value);
+            ptr = ptr->next;
+            ptrb = ptrb->next;
+        }
+    }
+
+    return S3;
 }
 
 // Return a new Set representing the difference between Set *this and Set b
 Set Set::set_difference(const Set& b) const {
-    // ADD CODE
-    return Set{};  // delete, if needed
+    Set S3{};
+    Node* ptr = head->next; //första noden, inte dummy
+    Node* ptrb = b.head->next; //första noden, inte dummy för b
+    Node* ptr3 = S3.head; //pekar på dummy
+
+    while (ptr != nullptr && ptrb != nullptr) {
+        if (ptr->value < ptrb->value) {
+            S3.insert_last(ptr->value);
+            ptr = ptr->next;
+        }
+        else if (ptr->value > ptrb->value) {
+            ptrb = ptrb->next;
+        }
+        else {
+            ptr = ptr->next;
+            ptrb = ptrb->next;
+        }
+    }
+
+    while (ptr != nullptr) {
+        S3.insert_last(ptr->value);
+        ptr = ptr->next;
+    }
+    S3.display();
+    return S3;
 }
 
 std::ostream& operator<<(std::ostream& os, const Set& rhs) {
@@ -249,9 +257,10 @@ std::ostream& operator<<(std::ostream& os, const Set& rhs) {
 }
 
 /********** Private member functions ************/
-void Set::insert(Node* p, int value) {
+//queencard 👑🃏
+//Inserts a new node with value value after the node pointed by p.
+void Set::insert_after(Node* p, int value) {
     Node* ptr = p;
-
     if (ptr != nullptr) {
         Node* newNode = new Node;
         newNode->value = value;
@@ -259,7 +268,21 @@ void Set::insert(Node* p, int value) {
         ptr->next = newNode;
         counter++;
     }
+}
 
+void Set::insert_last(int value) {
+    Node* ptr = head;
+
+    while (ptr->next != nullptr) {
+        ptr = ptr->next;
+    }
+    if (ptr->next == nullptr) {
+        Node* newNode = new Node;
+        newNode->value = value;
+        newNode->next = ptr->next;
+        ptr->next = newNode;
+        counter++;
+    }
 }
 
 void Set::remove(Node* p) {
@@ -268,5 +291,15 @@ void Set::remove(Node* p) {
     ptr1->next = ptr2->next;
     delete ptr2;
     counter--;
+}
+
+void Set::display() const{
+    Node* ptr = head->next;
+    std::cout << "Displays set" << ": ";
+    while (ptr != nullptr) {
+        std::cout << ptr->value << " ";
+        ptr = ptr->next;
+    }
+    std::cout << "\nget count nodes: " << Set::get_count_nodes() << "\ncounter: " << counter << "\n";
 }
 

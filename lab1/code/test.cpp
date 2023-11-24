@@ -286,6 +286,7 @@ int main() {
         assert(Set::get_count_nodes() == 9);
 
         Set S3 = S1.set_difference(S2);
+        std::cout << Set::get_count_nodes() << "\n";
         assert(Set::get_count_nodes() == 13);
 
         assert(S3.cardinality() == 3);
