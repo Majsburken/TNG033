@@ -25,6 +25,7 @@ Set::Set() : head{new Node{}}, counter{0} {  // create the dummy node
 
 // Constructor for creating a singleton {x}
 Set::Set(int x) : Set() {
+    //Head points at dummy, head->next points at the new Node
     head->next = new Node(x, nullptr);
     counter++;
 }
@@ -37,22 +38,27 @@ Set::Set(const std::vector<int>& elements) : Set() {
     * std::sort and std::unique cannot be used
     */
    
+    //range-based loop
     for (int x : elements) {
         Node* ptr = head; //pekar på dummy node
         while (ptr->next != nullptr) {
+            //adds x if it's lesser than the pointer's next value
             if (x < ptr->next->value) {
                 Node* n = new Node(x, ptr->next);
                 ptr->next = n;
                 counter++;
                 break;
             }
+            //increments ptr if greater
             else if (x > ptr->next->value) {
                 ptr = ptr->next;
             }
+            //if x is equal then it icrements to next vector element
             else if (x == ptr->next->value) {
                 break;
             }
         }
+        //adds first element
         if (ptr->next == nullptr) {
             ptr->next = new Node(x, nullptr);
             counter++;
@@ -61,13 +67,14 @@ Set::Set(const std::vector<int>& elements) : Set() {
 }
 
 // copy constructor
-Set::Set(const Set& rhs) : Set() {
-    // ADD CODE
-    Node* ptr1 = rhs.head->next;
-    Node* ptr2 = head;
+Set::Set(const Set& rhs) : Set() { //?deep copy?
+    Node* ptr1 = rhs.head->next; //ptr1 points at first node to be copied
+    Node* ptr2 = head; //points att dummy of list being copied into
 
     while (ptr1 != nullptr) {
+        //copies ptr1 value into ptr2
         ptr2->next = new Node(ptr1->value, nullptr);
+        //increments pointers
         ptr1 = ptr1->next;
         ptr2 = ptr2->next;
     }
@@ -76,14 +83,15 @@ Set::Set(const Set& rhs) : Set() {
 
 // Assignment operator: use copy-and-swap idiom
 Set& Set::operator=(Set rhs) {
-    std::swap(head, rhs.head);
-    std::swap(counter, rhs.counter);
-    return *this;
+    std::swap(head, rhs.head);//swap which list head pointers point at
+    std::swap(counter, rhs.counter);//swap the heads counters
+    return *this;//reference to the set function is called with
 }
 
 // Destructor: deallocate all nodes
 Set::~Set() {
     Node* ptr = head; //pekar på dummy
+    //goes through list and deletes nodes
     while (head!=nullptr) {
         ptr = head->next;
         delete head;
@@ -93,11 +101,13 @@ Set::~Set() {
 
 // Return number of elements in the set
 std::size_t Set::cardinality() const {
+    //returns counter
     return counter;
 }
 
 // Test if set is empty
 bool Set::empty() const {
+    //returns true if the counter is 0
     if (counter == 0) {
         return true;
     }
@@ -106,7 +116,8 @@ bool Set::empty() const {
 
 // Test if x is an element of the set
 bool Set::member(int x) const {
-    Node* ptr = head;
+    Node* ptr = head;//points att dummy
+    //if ptr->next is nullptr then it is not a member
     while (ptr->next != nullptr) {
         if (ptr->next->value == x) {
             return true;
@@ -122,26 +133,30 @@ bool Set::member(int x) const {
 // Otherwise, false is returned
 bool Set::is_subset(const Set& b) const { //b är S
     Node* ptr = head->next; //första noden, inte dummy
-    Node* ptr2 = b.head->next;
+    Node* ptr2 = b.head->next;//first node
     bool subset = false;
 
+    //if the set is empty then subset is true
     if (ptr == nullptr) {
         subset = true;
     }
 
+    //the set cannot be subset if it has a greater num of elements
     if (counter > b.counter) {
         return false;
     }
 
+    //go through lists
     while (ptr != nullptr) {
         while (ptr2 != nullptr) {
+            //checks if values match
             if (ptr->value == ptr2->value) {
-                ptr = ptr->next;
-                subset = true;
-                break;
+                ptr = ptr->next;//increment pointer
+                subset = true; //set subset true
+                break; //break out of inner loop
             }
             else {
-                ptr2 = ptr2->next;
+                ptr2 = ptr2->next;//increment 
                 subset = false;
             }
         }
@@ -154,15 +169,16 @@ bool Set::is_subset(const Set& b) const { //b är S
 // Repeated values are not allowed
 // Implement an algorithm similar to the one in exercise 3/Set 1, but don't use vectors
 Set Set::set_union(const Set& b) const {
-    Set S3{};
+    Set S3{}; //create new empty set
     Node* ptr = head->next; //första noden, inte dummy
     Node* ptrb = b.head->next; //första noden, inte dummy för b
     Node* ptr3 = S3.head; //pekar på dummy
 
+    //compares the two lists
     while (ptr != nullptr && ptrb != nullptr) {
         if (ptr->value < ptrb->value) {
-            S3.insert_last(ptr->value);
-            ptr = ptr->next;
+            S3.insert_last(ptr->value);//inserts
+            ptr = ptr->next;//increments
         }
         else if (ptr->value > ptrb->value) {
             S3.insert_last(ptrb->value);
@@ -175,11 +191,13 @@ Set Set::set_union(const Set& b) const {
         }
     }
 
+    //adds remainder of first list
     while (ptr != nullptr) {
         S3.insert_last(ptr->value);
         ptr = ptr->next;
     }
 
+    //adds remainder of second list
     while (ptrb != nullptr) {
         S3.insert_last(ptrb->value);
         ptrb = ptrb->next;
@@ -194,6 +212,7 @@ Set Set::set_intersection(const Set& b) const {
     Node* ptrb = b.head->next; //första noden, inte dummy för b
     Node* ptr3 = S3.head; //pekar på dummy
 
+    //adds so S3 only if they are the same
     while (ptr != nullptr && ptrb != nullptr) {
         if (ptr->value < ptrb->value) {
             ptr = ptr->next;
@@ -220,23 +239,23 @@ Set Set::set_difference(const Set& b) const {
 
     while (ptr != nullptr && ptrb != nullptr) {
         if (ptr->value < ptrb->value) {
-            S3.insert_last(ptr->value);
-            ptr = ptr->next;
+            S3.insert_last(ptr->value);//inserts ptr value if lesser than
+            ptr = ptr->next; //increments ptr
         }
         else if (ptr->value > ptrb->value) {
-            ptrb = ptrb->next;
+            ptrb = ptrb->next;//increments ptrb if ptr greater than
         }
-        else {
+        else {//increments both if equal
             ptr = ptr->next;
             ptrb = ptrb->next;
         }
     }
 
+    //adds remainder of the calling set
     while (ptr != nullptr) {
         S3.insert_last(ptr->value);
         ptr = ptr->next;
     }
-    S3.display();
     return S3;
 }
 
