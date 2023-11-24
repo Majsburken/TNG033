@@ -172,7 +172,6 @@ Set Set::set_union(const Set& b) const {
     Set S3{}; //create new empty set
     Node* ptr = head->next; //första noden, inte dummy
     Node* ptrb = b.head->next; //första noden, inte dummy för b
-    Node* ptr3 = S3.head; //pekar på dummy
 
     //compares the two lists
     while (ptr != nullptr && ptrb != nullptr) {
@@ -210,7 +209,6 @@ Set Set::set_intersection(const Set& b) const {
     Set S3{};
     Node* ptr = head->next; //första noden, inte dummy
     Node* ptrb = b.head->next; //första noden, inte dummy för b
-    Node* ptr3 = S3.head; //pekar på dummy
 
     //adds so S3 only if they are the same
     while (ptr != nullptr && ptrb != nullptr) {
@@ -235,7 +233,6 @@ Set Set::set_difference(const Set& b) const {
     Set S3{};
     Node* ptr = head->next; //första noden, inte dummy
     Node* ptrb = b.head->next; //första noden, inte dummy för b
-    Node* ptr3 = S3.head; //pekar på dummy
 
     while (ptr != nullptr && ptrb != nullptr) {
         if (ptr->value < ptrb->value) {
