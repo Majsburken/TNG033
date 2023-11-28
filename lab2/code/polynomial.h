@@ -25,6 +25,7 @@ public:
 
     Polynomial(Polynomial& toBeCopied);
 
+    void operator=(Polynomial setAs);
 };
 
 

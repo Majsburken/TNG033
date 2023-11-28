@@ -21,8 +21,8 @@ std::size_t Expression::get_count_expressions() {
 
 
 /* ************************* */
-static bool isRoot(double possibleRoot) {
-    double sum = this[0];
+ bool Expression::isRoot(double possibleRoot) {
+     double sum = (*this)[0];
     for (int i = 1; i < this.size(); i++) {
         sum += this[i]*std::pow(possibleRoot, i);
     }
@@ -62,6 +62,7 @@ static bool isRoot(double possibleRoot) {
 
  Expression* clone() {
      Expression* ptr = Expression{ this }; //VET INTE
+     return ptr;
 }
 
 

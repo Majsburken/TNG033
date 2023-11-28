@@ -14,3 +14,7 @@ Polynomial(const std::vector<double>& coeffs) : coeffecients(coeffs) {};
 Polynomial(double& realConstant) : coeffecients(realConstant) {};
 
 Polynomial(Polynomial& toBeCopied) : Polynomial(toBeCopied) {};
+
+void operator=(Polynomial setAs) {
+	this.clone()
+}

@@ -17,11 +17,11 @@ public:
     }
 
     // ADD OTHER MEMBER FUNCTIONS
-    static bool isRoot(double x);
+    bool isRoot(double x);
 
     std::string string(Expression e);
 
-    double operator()(double d);
+    virtual void Expression::operator()();
 
     friend std::ostream& operator<<(std::ostream& os, Expression a);
 
