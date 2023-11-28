@@ -21,7 +21,7 @@ public:
 
     std::string string(Expression e);
 
-    virtual void Expression::operator()();
+    virtual void operator()(double d);
 
     friend std::ostream& operator<<(std::ostream& os, Expression a);
 

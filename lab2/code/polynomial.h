@@ -26,6 +26,10 @@ public:
     Polynomial(Polynomial& toBeCopied);
 
     void operator=(Polynomial setAs);
+
+    virtual double operator()(double d);
+    double operator[](int index);
+
 };
 
 

@@ -18,3 +18,15 @@ Polynomial(Polynomial& toBeCopied) : Polynomial(toBeCopied) {};
 void operator=(Polynomial setAs) {
 	this.clone()
 }
+
+double Polynomial::operator()(double d) {
+    double sum = (*this)[0];
+    for (int i = 1; i < (*this).coeffecients.size(); i++) {
+        sum += (*this)[i] * std::pow(d, i);
+    }
+    return sum;
+}
+
+double Polynomial::operator[](int index) {
+    return (*this).coeffecients[index];
+}
