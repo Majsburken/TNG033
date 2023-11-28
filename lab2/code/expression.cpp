@@ -43,7 +43,7 @@ std::size_t Expression::get_count_expressions() {
 }
 
 
-  void Expression::operator()() = 0;
+ virtual void Expression::operator()(double d) = 0;
 
  std::ostream& operator<<(std::ostream& os, Expression a) {
      os << std::string(a);
