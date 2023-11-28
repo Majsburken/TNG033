@@ -6,39 +6,70 @@
 #include "polynomial.h"
 #include <cmath> //To use "pow"
 #include <vector>
+#include <iomanip>
+#include <format>
 
 
 // ADD implementation of the member functions for class Polynomial
-Polynomial(const std::vector<double>& coeffs) : coeffecients(coeffs) {};
+//polynomial:: because it is a class function, push back elements of arg. vector into the this polynomial's vector of coefficiants  
+Polynomial::Polynomial(const std::vector<double>& coeffs) { //WHY & and not call by value
+    for (double e : coeffs) {
+        (*this).coeffecients.push_back(e);
+    }
+};
 
-Polynomial(double& realConstant) : coeffecients(realConstant) {};
+//polynomial:: because it is a class function, push back elements of arg. into the this polynomial's vector of coefficiants  
+Polynomial::Polynomial(const double& realConstant){ //WHY & and not call by value
+    (*this).coeffecients.push_back(realConstant);
+};
 
-Polynomial(Polynomial& toBeCopied) : Polynomial(toBeCopied) {};
+//push_backs arguments of the poly. to be copied into the vector of the poly. calling.
+Polynomial::Polynomial(Polynomial& toBeCopied) {
+    for (double e : toBeCopied.coeffecients) {
+        (*this).coeffecients.push_back(e);
+    }
+};
 
-void operator=(Polynomial setAs) {
-	this.clone()
+
+void Polynomial::operator=(Polynomial setAs) {
+    (*this).clone();
 }
 
+Polynomial* Polynomial::clone() const{
+    return new Polynomial(*this);
+}
 
+//Implementation of pure virtial function declared in parent class
+std::string Polynomial::toString(std::ostream& os) const {
+    std::string s;
 
+    for (int i = 0; i < (*this).coeffecients.size(); i++) {
+        if (i == 0) {
+            s+=  coeffecients[i];
+        }
+        else {
+            if ((*this).coeffecients[i] < 0) {
+                s += " - " + std::format("{:.2f}", (*this).coeffecients[i]);
+            }
+            else {
+                s += " + " + std::format("{:.2f}", (*this).coeffecients[i]);
+            }
+            s += "x^" + i;
+        }
+
+    }
+
+    return s;
+}
 
 double Polynomial::operator()(double d) const{ //Const, operator() should not modify the calling Polynomial
     double sum = 0;
 
-    //Maxs kod
-    /*for (int i = 0; i < std::ssize(this->coeff);i++) {
-        sum += this->coeff[i] * pow(x, i);
-    }*/
-
-    //Vår kod
     for (int i = 0; i < (*this).coeffecients.size(); i++) {
-        sum += (*this)[i] * std::pow(d, i);
+        sum += (*this).coeffecients[i] * std::pow(d, i);
     }
     return sum;
 }
 
 double Polynomial::operator[](int index) {
-    return (*this).coeffecients[index]; //Samma detta?: 	return this->coeff[index];
-
-
-}
+    return (*this).coeffecients[index];

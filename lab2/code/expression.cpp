@@ -21,37 +21,22 @@ std::size_t Expression::get_count_expressions() {
 
 
 /* ************************* */
- bool Expression::isRoot(double possibleRoot) {
-     double sum = (*this)[0];
-
+ bool Expression::isRoot(const double possibleRoot) const {
      if ((*this)(possibleRoot) == 0) {
          return true;
      }
-    
+     return false;
 }
 
- std::string string(Expression e) {
-    std::string s = e[0];
-
-    for (int i = 1; i < e.size(); i++) {
-        if (e[i] != 0) {
-            s += " + " + e[i] + "x^" + i;
-        }
-    }
-
-    return s;
-}
+//string should not be implemented here, it is a pure virtual function
 
  //operator() should not be implemented here, it is a pure virtual function
 
- std::ostream& operator<<(std::ostream& os, Expression a) {
-     os << std::string(a);
+ std::ostream& operator<<(std::ostream& os, Expression& a) {
+     os << a.toString(os);
      return os;
  }
 
- Expression* clone() {
-     Expression* ptr = Expression{ this }; //VET INTE
-     return ptr;
-}
+
 
 

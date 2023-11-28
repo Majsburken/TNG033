@@ -17,9 +17,10 @@ public:
     }
 
     // ADD OTHER MEMBER FUNCTIONS
-    bool isRoot(double x);
+    bool isRoot(const double x) const;
 
-    std::string string(Expression e);
+    //Pure virtual function, must be implemented in a derived class, not implemented in base class
+    virtual std::string toString(std::ostream& os) const = 0;
 
     //Returns a double and takes a double as agrument
     //Const, operator() should not modify any Expressions's derived classes (Polynomial, Logarithm)
@@ -28,7 +29,7 @@ public:
 
     friend std::ostream& operator<<(std::ostream& os, Expression a);
 
-    Expression* clone();
+    virtual Expression* clone() const = 0;
     // Return number of existing instances of class Expression
     // Used only for debug purposes
     static std::size_t get_count_expressions();
