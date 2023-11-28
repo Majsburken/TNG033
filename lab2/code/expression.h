@@ -17,7 +17,15 @@ public:
     }
 
     // ADD OTHER MEMBER FUNCTIONS
+    static bool isRoot(double x);
 
+    std::string string(Expression e);
+
+    double operator()(double d);
+
+    friend std::ostream& operator<<(std::ostream& os, Expression a);
+
+    Expression* clone();
     // Return number of existing instances of class Expression
     // Used only for debug purposes
     static std::size_t get_count_expressions();
