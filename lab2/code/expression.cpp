@@ -23,15 +23,11 @@ std::size_t Expression::get_count_expressions() {
 /* ************************* */
  bool Expression::isRoot(double possibleRoot) {
      double sum = (*this)[0];
-    for (int i = 1; i < this.size(); i++) {
-        sum += this[i]*std::pow(possibleRoot, i);
-    }
-    if (sum == 0) {
-        return true;
-    }
-    else {
-        return false;
-    }
+
+     if ((*this)(possibleRoot) == 0) {
+         return true;
+     }
+    
 }
 
  std::string string(Expression e) {
@@ -47,13 +43,7 @@ std::size_t Expression::get_count_expressions() {
 }
 
 
- double operator()(double d) {
-     double sum = this[0];
-     for (int i = 1; i < this.size(); i++) {
-         sum += this[i] * std::pow(d, i);
-     }
-     return sum;
- }
+  void Expression::operator()() = 0;
 
  std::ostream& operator<<(std::ostream& os, Expression a) {
      os << std::string(a);
