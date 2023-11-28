@@ -16,8 +16,6 @@ class Polynomial : public Expression {
 protected:
     std::vector<double> coeffecients;
 
-
-    // ADD CODE
 public:
     Polynomial(const std::vector<double>& coeffs);
 
@@ -27,7 +25,11 @@ public:
 
     void operator=(Polynomial setAs);
 
-    virtual double operator()(double d);
+
+    //Const, operator() should not modify the calling Polynoimal(?)
+    //Function operator() will override the Pure Virtual function declared in base class
+    virtual double operator()(double d) const override;
+
     double operator[](int index);
 
 };

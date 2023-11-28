@@ -21,7 +21,10 @@ public:
 
     std::string string(Expression e);
 
-    virtual void operator()(double d);
+    //Returns a double and takes a double as agrument
+    //Const, operator() should not modify any Expressions's derived classes (Polynomial, Logarithm)
+    //Pure Virtual function, we do not define the function in the base class
+    virtual double operator()(double d) const = 0;
 
     friend std::ostream& operator<<(std::ostream& os, Expression a);
 

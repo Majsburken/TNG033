@@ -42,8 +42,7 @@ std::size_t Expression::get_count_expressions() {
     return s;
 }
 
-
- virtual void Expression::operator()(double d) = 0;
+ //operator() should not be implemented here, it is a pure virtual function
 
  std::ostream& operator<<(std::ostream& os, Expression a) {
      os << std::string(a);
