@@ -21,9 +21,15 @@ public:
 
     Polynomial(const double& realConstant);
 
-    Polynomial(Polynomial& toBeCopied);
+    Polynomial(const Polynomial& toBeCopied);
 
     void operator=(Polynomial setAs);
+
+    Polynomial operator+=(Polynomial& toAdd);
+
+    Polynomial operator+(Polynomial toAdd);
+
+    Polynomial operator+(Polynomial& lhs, double d);
 
     Polynomial* clone() const;
 

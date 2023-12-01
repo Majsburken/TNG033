@@ -19,12 +19,12 @@ Polynomial::Polynomial(const std::vector<double>& coeffs) { //WHY & and not call
 };
 
 //polynomial:: because it is a class function, push back elements of arg. into the this polynomial's vector of coefficiants  
-Polynomial::Polynomial(const double& realConstant){ //WHY & and not call by value
+Polynomial::Polynomial(const double& realConstant) { //WHY & and not call by value
     (*this).coeffecients.push_back(realConstant);
 };
 
 //push_backs arguments of the poly. to be copied into the vector of the poly. calling.
-Polynomial::Polynomial(Polynomial& toBeCopied) {
+Polynomial::Polynomial(const Polynomial& toBeCopied) {
     for (double e : toBeCopied.coeffecients) {
         (*this).coeffecients.push_back(e);
     }
@@ -32,7 +32,27 @@ Polynomial::Polynomial(Polynomial& toBeCopied) {
 
 
 void Polynomial::operator=(Polynomial setAs) {
-    (*this).clone();
+    *this = *(setAs).clone();//?
+}
+
+Polynomial Polynomial::operator+=(Polynomial& toAdd) {
+    for (int i = 0; i < std::ssize(toAdd.coeffecients); i++) {
+        if (i < std::ssize((*this).coeffecients)) {
+            (*this).coeffecients[i] += toAdd.coeffecients[i];
+        }
+        else {
+            (*this).coeffecients.push_back(toAdd.coeffecients[i]);
+        }
+    }
+    return *this;
+}
+
+Polynomial Polynomial::operator+(Polynomial toAdd) {
+    return *(*this).clone() += toAdd;
+}
+
+Polynomial Polynomial::operator+(Polynomial& lhs, double d) {
+    return lhs + Polynomial(d);
 }
 
 Polynomial* Polynomial::clone() const{
@@ -73,3 +93,4 @@ double Polynomial::operator()(double d) const{ //Const, operator() should not mo
 
 double Polynomial::operator[](int index) {
     return (*this).coeffecients[index];
+}
