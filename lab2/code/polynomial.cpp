@@ -8,6 +8,7 @@
 #include <vector>
 #include <iomanip>
 #include <format>
+#include <string>
 
 
 // ADD implementation of the member functions for class Polynomial
@@ -31,11 +32,11 @@ Polynomial::Polynomial(const Polynomial& toBeCopied) {
 };
 
 
-void Polynomial::operator=(Polynomial setAs) {
-    *this = *(setAs).clone();//?
+Polynomial& Polynomial::operator=(const Polynomial& setAs) {
+    return *(setAs).clone();
 }
 
-Polynomial Polynomial::operator+=(Polynomial& toAdd) {
+Polynomial& Polynomial::operator+=(const Polynomial& toAdd) {
     for (int i = 0; i < std::ssize(toAdd.coeffecients); i++) {
         if (i < std::ssize((*this).coeffecients)) {
             (*this).coeffecients[i] += toAdd.coeffecients[i];
@@ -47,11 +48,11 @@ Polynomial Polynomial::operator+=(Polynomial& toAdd) {
     return *this;
 }
 
-Polynomial operator+(Polynomial lhs, Polynomial rhs) {
+Polynomial& operator+(Polynomial& lhs,const Polynomial& rhs) {
     return *(lhs).clone() += rhs;
 }
 
-Polynomial operator+(Polynomial& lhs, double d) {
+Polynomial& operator+(Polynomial& lhs, double d) {
     return lhs + Polynomial(d);
 }
 
@@ -60,25 +61,22 @@ Polynomial* Polynomial::clone() const{
 }
 
 //Implementation of pure virtial function declared in parent class
-std::string Polynomial::string(std::ostream& os) const {
+std::string Polynomial::string() const {
     std::string s;
-
     for (int i = 0; i < (*this).coeffecients.size(); i++) {
         if (i == 0) {
-            s+=  coeffecients[i];
+            s+=  std::to_string(coeffecients[i]);
         }
         else {
             if ((*this).coeffecients[i] < 0) {
-                s += " - " + std::format("{:.2f}", (*this).coeffecients[i]);
+                s += " - " + std::format("{:.2f}", std::to_string((*this).coeffecients[i]));
             }
             else {
-                s += " + " + std::format("{:.2f}", (*this).coeffecients[i]);
+                s += " + " + std::format("{:.2f}", std::to_string((*this).coeffecients[i]));
             }
-            s += "x^" + i;
+            s += " * x^" + std::to_string(i);
         }
-
     }
-
     return s;
 }
 
@@ -91,6 +89,6 @@ double Polynomial::operator()(double d) const{ //Const, operator() should not mo
     return sum;
 }
 
-double Polynomial::operator[](int index) {
+double Polynomial::operator[](int index) const {
     return (*this).coeffecients[index];
 }

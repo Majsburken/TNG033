@@ -23,13 +23,13 @@ public:
 
     Polynomial(const Polynomial& toBeCopied);
 
-    void operator=(Polynomial setAs);
+    Polynomial& operator=(const Polynomial& setAs);
 
-    Polynomial operator+=(Polynomial& toAdd);
+    Polynomial& operator+=(const Polynomial& toAdd);
 
-    friend Polynomial operator+(Polynomial toAdd);
+    friend Polynomial& operator+(Polynomial& lhs,const Polynomial& rhs);
 
-    friend Polynomial operator+(Polynomial& lhs, double d);
+    friend Polynomial& operator+(Polynomial& lhs, double d);
 
     Polynomial* clone() const;
 
@@ -37,9 +37,9 @@ public:
     //Function operator() will override the Pure Virtual function declared in base class
     virtual double operator()(double d) const override;
 
-    double operator[](int index);
+    double operator[](int index) const;
 
-    std::string string(std::ostream& os) const;
+    std::string string() const;
 
 };
 
