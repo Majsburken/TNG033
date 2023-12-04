@@ -27,9 +27,9 @@ public:
 
     Polynomial operator+=(Polynomial& toAdd);
 
-    Polynomial operator+(Polynomial toAdd);
+    friend Polynomial operator+(Polynomial toAdd);
 
-    Polynomial operator+(Polynomial& lhs, double d);
+    friend Polynomial operator+(Polynomial& lhs, double d);
 
     Polynomial* clone() const;
 
@@ -39,7 +39,7 @@ public:
 
     double operator[](int index);
 
-    std::string toString(std::ostream& os) const;
+    std::string string(std::ostream& os) const;
 
 };
 

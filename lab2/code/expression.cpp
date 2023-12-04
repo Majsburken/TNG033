@@ -33,7 +33,7 @@ std::size_t Expression::get_count_expressions() {
  //operator() should not be implemented here, it is a pure virtual function
 
  std::ostream& operator<<(std::ostream& os, Expression& a) {
-     os << a.toString(os);
+     os << a.string(os);
      return os;
  }
 

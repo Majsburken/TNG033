@@ -20,7 +20,7 @@ public:
     bool isRoot(const double x) const;
 
     //Pure virtual function, must be implemented in a derived class, not implemented in base class
-    virtual std::string toString(std::ostream& os) const = 0;
+    virtual std::string string(std::ostream& os) const = 0;
 
     //Returns a double and takes a double as agrument
     //Const, operator() should not modify any Expressions's derived classes (Polynomial, Logarithm)

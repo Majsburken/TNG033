@@ -47,11 +47,11 @@ Polynomial Polynomial::operator+=(Polynomial& toAdd) {
     return *this;
 }
 
-Polynomial Polynomial::operator+(Polynomial toAdd) {
-    return *(*this).clone() += toAdd;
+Polynomial operator+(Polynomial lhs, Polynomial rhs) {
+    return *(lhs).clone() += rhs;
 }
 
-Polynomial Polynomial::operator+(Polynomial& lhs, double d) {
+Polynomial operator+(Polynomial& lhs, double d) {
     return lhs + Polynomial(d);
 }
 
@@ -60,7 +60,7 @@ Polynomial* Polynomial::clone() const{
 }
 
 //Implementation of pure virtial function declared in parent class
-std::string Polynomial::toString(std::ostream& os) const {
+std::string Polynomial::string(std::ostream& os) const {
     std::string s;
 
     for (int i = 0; i < (*this).coeffecients.size(); i++) {
