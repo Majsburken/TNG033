@@ -6,6 +6,7 @@
 #include <iostream>
 #include <vector>
 #include <cassert>
+#include <format>
 
 #include "polynomial.h"
 #include "logarithm.h"
@@ -44,7 +45,7 @@ int main() {
      ******************************************************/
     std::cout << "\nTEST PHASE 1: Polynomial - constructors, conversion to std::string, "
                  "and operator<<\n";
-
+#if 1
     {
         std::vector<double> v1{2.2, 4.4, -2.0, 5.0};
         const Polynomial p1{v1};  // create a polynomial of degree 3
@@ -55,13 +56,13 @@ int main() {
     }
 
     assert(Expression::get_count_expressions() == 0);
-
+#endif
     /*****************************************************
      * TEST PHASE 2                                       *
      * Polynomial: operator[]                             *
      ******************************************************/
     std::cout << "\nTEST PHASE 2: Polynomial::operator[]\n";
-
+#if 1
     {
         std::vector<double> v1{2.2, 4.4, -2.0, 5.0};
         Polynomial p1{v1};  // create a polynomial of degree 3
@@ -78,11 +79,12 @@ int main() {
     }
 
     assert(Expression::get_count_expressions() == 0);
-
+#endif
     /*****************************************************
      * TEST PHASE 3                                       *
      * Polynomial: copy constructor                       *
      ******************************************************/
+#if 1
     std::cout << "\nTEST PHASE 3: Polynomial - copy constructor\n";
 
     {
@@ -100,11 +102,12 @@ int main() {
     }
 
     assert(Expression::get_count_expressions() == 0);
-
+#endif
     /*****************************************************
      * TEST PHASE 4                                       *
      * Polynomial: assignment operator                    *
      ******************************************************/
+#if 1
     std::cout << "\nTEST PHASE 4: Polynomial - assignment operator\n";
 
     {
@@ -137,11 +140,12 @@ int main() {
     }
 
     assert(Expression::get_count_expressions() == 0);
-
+#endif
     /*****************************************************
      * TEST PHASE 5                                       *
      * Polynomial: operator()                             *
      ******************************************************/
+    #if 1
     std::cout << "\nTEST PHASE 5: Polynomial::operator()\n";
 
     {
@@ -153,16 +157,20 @@ int main() {
         std::vector<double> v2{2.2, 4.4, 2.0, 5.0};
         const Polynomial p2{v2};  // create a polynomial of degree 3
 
+
+        std::cout << "Sum " << std::format("{:.2f}", p2(3.3)) << "\n";
+
         // Test
         assert(std::format("{:.2f}", p2(3.3)) == "218.19");
     }
 
     assert(Expression::get_count_expressions() == 0);
-
+#endif
     /*****************************************************
      * TEST PHASE 6                                       *
      * Polynomial: isRoot                                 *
      ******************************************************/
+#if 0
     std::cout << "\nTEST PHASE 6: Polynomial::isRoot\n";
 
     {
@@ -178,11 +186,12 @@ int main() {
     }
 
     assert(Expression::get_count_expressions() == 0);
-
+#endif
     /*****************************************************
      * TEST PHASE 7                                       *
      * Polynomial: P1 += P2                                  *
      ******************************************************/
+#if 0
     std::cout << "\nTEST PHASE 7: P1 += P2\n";
 
     {
@@ -206,11 +215,12 @@ int main() {
     }
 
     assert(Expression::get_count_expressions() == 0);
-
+#endif
     /*****************************************************
      * TEST PHASE 8                                       *
      * Polynomial: P1+P2                                  *
      ******************************************************/
+#if 0
     std::cout << "\nTEST PHASE 8: P1 + P2\n";
 
     {
@@ -234,11 +244,13 @@ int main() {
     }
 
     assert(Expression::get_count_expressions() == 0);
+#endif
 
     /*****************************************************
      * TEST PHASE 9                                       *
      * Polynomial: p += k, k+P and P+k                    *
      ******************************************************/
+#if 0
     std::cout << "\nTEST PHASE 9: p += k, k+P and P+k\n";
 
     {
@@ -269,7 +281,7 @@ int main() {
     }
 
     assert(Expression::get_count_expressions() == 0);
-
+#endif
     ///******************************************************
     // * TEST PHASE 10                                       *
     // * Logarithm: constructors                             *

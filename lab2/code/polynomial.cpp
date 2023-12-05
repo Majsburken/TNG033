@@ -33,7 +33,10 @@ Polynomial::Polynomial(const Polynomial& toBeCopied) {
 
 
 Polynomial& Polynomial::operator=(const Polynomial& setAs) {
-    return *(setAs).clone();
+    (*this).coeffecients = (setAs).coeffecients;
+
+    return *this;
+    
 }
 
 Polynomial& Polynomial::operator+=(const Polynomial& toAdd) {
@@ -57,38 +60,51 @@ Polynomial& operator+(Polynomial& lhs, double d) {
 }
 
 Polynomial* Polynomial::clone() const{
-    return new Polynomial(*this);
+   return new Polynomial(*this);
 }
 
 //Implementation of pure virtial function declared in parent class
-std::string Polynomial::string() const {
+Polynomial::operator std::string() const {
     std::string s;
     for (int i = 0; i < (*this).coeffecients.size(); i++) {
         if (i == 0) {
-            s+=  std::to_string(coeffecients[i]);
+            s+= (std::format("{:.2f}", coeffecients[i]));
         }
         else {
             if ((*this).coeffecients[i] < 0) {
-                s += " - " + std::format("{:.2f}", std::to_string((*this).coeffecients[i]));
+                s += " - " + std::format("{:.2f}", abs((*this).coeffecients[i]));
             }
             else {
-                s += " + " + std::format("{:.2f}", std::to_string((*this).coeffecients[i]));
+                s += " + " + std::format("{:.2f}", (*this).coeffecients[i]);
             }
-            s += " * x^" + std::to_string(i);
+            s += " * X^" + std::to_string(i);
         }
     }
     return s;
 }
 
 double Polynomial::operator()(double d) const{ //Const, operator() should not modify the calling Polynomial
-    double sum = 0;
+    double sum = 0.00;
 
     for (int i = 0; i < (*this).coeffecients.size(); i++) {
         sum += (*this).coeffecients[i] * std::pow(d, i);
     }
+    /*return (std::format("{:.2f}", sum));*/
+
     return sum;
 }
 
-double Polynomial::operator[](int index) const {
-    return (*this).coeffecients[index];
+ double& Polynomial::operator[](int index){
+     return coeffecients[index];
 }
+
+ double Polynomial::operator[](int index) const {
+     return coeffecients[index];
+ }
+
+std::ostream& operator<<(std::ostream& os, const Polynomial& p) {
+    os << std::string{ p };
+    return os;
+}
+
+

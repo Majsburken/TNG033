@@ -25,6 +25,8 @@ public:
 
     Polynomial& operator=(const Polynomial& setAs);
 
+    friend std::ostream& operator<<(std::ostream& os, const Polynomial& p);//friend???
+
     Polynomial& operator+=(const Polynomial& toAdd);
 
     friend Polynomial& operator+(Polynomial& lhs,const Polynomial& rhs);
@@ -37,9 +39,12 @@ public:
     //Function operator() will override the Pure Virtual function declared in base class
     virtual double operator()(double d) const override;
 
+    double& operator[](int index);
+
     double operator[](int index) const;
 
-    std::string string() const;
+
+    operator std::string() const;
 
 };
 
