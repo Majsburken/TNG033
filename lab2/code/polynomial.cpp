@@ -51,16 +51,17 @@ Polynomial& Polynomial::operator+=(const Polynomial& toAdd) {
     return *this;
 }
 
-Polynomial& operator+(Polynomial& lhs,const Polynomial& rhs) {
-    return *(lhs).clone() += rhs;
+Polynomial operator+(const Polynomial& lhs, const Polynomial& rhs) {
+   return  Polynomial(lhs) += rhs; //not dynamic conastructor = deletes object itself
 }
 
-Polynomial& operator+(Polynomial& lhs, double d) {
+Polynomial operator+(Polynomial& lhs, double d) {
     return lhs + Polynomial(d);
 }
 
 Polynomial* Polynomial::clone() const{
-   return new Polynomial(*this);
+   return new Polynomial(*this); //dynamic constructor new says you will handle the deleting and stuff yourself
+   //"new" allocates memory in heap
 }
 
 //Implementation of pure virtial function declared in parent class

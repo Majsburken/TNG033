@@ -29,9 +29,9 @@ public:
 
     Polynomial& operator+=(const Polynomial& toAdd);
 
-    friend Polynomial& operator+(Polynomial& lhs,const Polynomial& rhs);
+    friend Polynomial operator+(const Polynomial& lhs,const Polynomial& rhs);
 
-    friend Polynomial& operator+(Polynomial& lhs, double d);
+    friend Polynomial operator+(Polynomial& lhs, double d);
 
     Polynomial* clone() const;
 

@@ -10,5 +10,19 @@
 #include "expression.h"
 
 class Logarithm : public Expression {
-    // ADD CODE
+
+private: 
+	double c1;
+	double c2;
+	Expression* E;
+
+public:
+	Logarithm();
+
+
+	Polynomial* clone() const;
+	virtual double operator()(double d) const override;
+
+
+
 };
