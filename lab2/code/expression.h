@@ -20,12 +20,13 @@ public:
     bool isRoot(const double x) const;
 
     //Pure virtual function, must be implemented in a derived class, not implemented in base class
-    //virtual std::string string() const = 0;
+    virtual operator std::string() const = 0;
 
     //Returns a double and takes a double as agrument
     //Const, operator() should not modify any Expressions's derived classes (Polynomial, Logarithm)
     //Pure Virtual function, we do not define the function in the base class
     virtual double operator()(double d) const = 0;
+
 
     //friend std::ostream& operator<<(std::ostream& os, const Expression a);
 

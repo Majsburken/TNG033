@@ -44,7 +44,7 @@ public:
     double operator[](int index) const;
 
 
-    operator std::string() const;
+    operator std::string() const override;
 
 };
 
