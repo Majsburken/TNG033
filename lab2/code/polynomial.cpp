@@ -103,9 +103,6 @@ double Polynomial::operator()(double d) const{ //Const, operator() should not mo
      return coeffecients[index];
  }
 
-std::ostream& operator<<(std::ostream& os, const Polynomial& p) {
-    os << std::string{ p };
-    return os;
-}
+
 
 

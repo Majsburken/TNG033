@@ -27,6 +27,10 @@ public:
     //Pure Virtual function, we do not define the function in the base class
     virtual double operator()(double d) const = 0;
 
+    friend std::ostream& operator<<(std::ostream& os, const Expression& e) {
+    os << std::string{ e };
+    return os;
+}
 
     //friend std::ostream& operator<<(std::ostream& os, const Expression a);
 

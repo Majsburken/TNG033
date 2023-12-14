@@ -25,8 +25,6 @@ public:
 
     Polynomial& operator=(const Polynomial& setAs);
 
-    friend std::ostream& operator<<(std::ostream& os, const Polynomial& p);//friend???
-
     Polynomial& operator+=(const Polynomial& toAdd);
 
     friend Polynomial operator+(const Polynomial& lhs,const Polynomial& rhs);

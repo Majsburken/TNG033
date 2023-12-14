@@ -24,10 +24,11 @@ public:
 
 	Logarithm(const Logarithm& L);
 
-	Logarithm* clone() const;
-	virtual double operator()(double d) const override;
+	~Logarithm();
 
-	friend std::ostream& operator<<(std::ostream& os, const Logarithm& l);
+	virtual Logarithm* clone() const;
+
+	virtual double operator()(double d) const override;
 
 	operator std::string() const override;
 };

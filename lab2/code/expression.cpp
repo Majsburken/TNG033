@@ -18,8 +18,6 @@ std::size_t Expression::get_count_expressions() {
     return Expression::count_expressions;
 }
 
-
-
 /* ************************* */
  bool Expression::isRoot(const double possibleRoot) const {
      if ((*this)(possibleRoot) == 0) {
