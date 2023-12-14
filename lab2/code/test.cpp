@@ -8,6 +8,8 @@
 #include <cassert>
 #include <format>
 
+#include <cmath>
+
 #include "polynomial.h"
 #include "logarithm.h"
 
@@ -297,8 +299,6 @@ int main() {
     {
         Logarithm l1;  // default constructor
         std::cout << l1 << "\n";
-        //std::cout << "\n" << "std::string(l2): " << std::string(l1) + " \n";
-        //std::cout << "get_count_expression: " << Expression::get_count_expressions() << "\n";
 
         // Test
         assert(Expression::get_count_expressions() == 2);
@@ -309,7 +309,7 @@ int main() {
         Logarithm l2{p2, 2, -3, 10};
 
         p2[1] = -999.0;  // should not modify  l2
-        //std::cout << "get_count_expression: " << Expression::get_count_expressions() << "\n";
+
         // Test
         assert(Expression::get_count_expressions() == 5);
         assert(std::string{l2} ==
@@ -317,25 +317,24 @@ int main() {
      
 
         Logarithm l3{l1, 1, 2, 10};
-        std::cout << "get_count_expression: " << Expression::get_count_expressions() << "\n";
-
         assert(Expression::get_count_expressions() == 8);
 
 
-        //l1.set_base(3);  // should not modify l3
+        l1.set_base(3);  // should not modify l3
 
-        //// Test
-        //assert(std::string{l3} ==
-        //       std::string{"1.00 + 2.00 * Log_10( 0.00 + 1.00 * Log_2( 0.00 + 1.00 * X^1 ) )"});
-    }
+        // Test
+        assert(std::string{l3} ==
+        std::string{"1.00 + 2.00 * Log_10( 0.00 + 1.00 * Log_2( 0.00 + 1.00 * X^1 ) )"});
 
-    //assert(Expression::get_count_expressions() == 0);
+        }
+
+    assert(Expression::get_count_expressions() == 0);
 #endif
     /*****************************************************
      * TEST PHASE 11                                      *
      * Logarithm: copy constructor                        *
      ******************************************************/
-#if 0
+#if 1
     std::cout << "\nTEST PHASE 11: Logarithm - copy constructor\n";
 
     {
@@ -362,7 +361,7 @@ int main() {
      * TEST PHASE 12                                      *
      * Logarithm: isRoot                                  *
      ******************************************************/
-#if 0
+#if 1
     std::cout << "\nTEST PHASE 12: isRoot\n";
 
     {
@@ -384,7 +383,7 @@ int main() {
      * TEST PHASE 13                                       *
      * Logarithm: operator()                              *
      ******************************************************/
-#if 0
+#if 1
     std::cout << "\nTEST PHASE 13: Logarithm::operator()\n";
 
     {
@@ -397,6 +396,11 @@ int main() {
 
         Logarithm l2{p2, 2, 3, 10};
         assert(Expression::get_count_expressions() == 5);
+
+
+        std::cout << "l2(2): "<< l2(2) << "\n";
+        
+
         assert(l2(2) >= 3.4313);
     }
 
@@ -406,7 +410,7 @@ int main() {
      * TEST PHASE 14                                      *
      * Logarithm: assignment operator                     *
      ******************************************************/
-#if 0
+#if 1
     std::cout << "\nTEST PHASE 14: Logarithm - assignment operator\n";
 
     {
@@ -426,7 +430,6 @@ int main() {
         ptr_l1 = nullptr;
         assert(Expression::get_count_expressions() == 3);
 
-        // Test
         assert(std::string{l0} == std::string("1.00 + 1.00 * Log_2( -1.00 + 0.00 * X^1 + 1.00 * X^2 )"));
     }
 
@@ -436,7 +439,7 @@ int main() {
      * TEST PHASE 15                                      *
      * Expressions: polymorphism                          *
      ******************************************************/
-#if 0
+#if 1
     std::cout << "\nTEST PHASE 15:  Expressions - polymorphism\n";
 
     {
@@ -455,7 +458,7 @@ int main() {
      * TEST PHASE 16                                      *
      * Expression: assignment                             *
      ******************************************************/
-#if 0
+#if 1
     std::cout << "\nTEST PHASE 16:  Expression::operator=\n";
 
     {
@@ -465,7 +468,8 @@ int main() {
 
         Expression* e2 = new Logarithm{};
 
-        *e1 = *e2; //<-- should not compile!!
+        //tries to assign two different expressions not allowed
+        //*e1 = *e2; //<-- should not compile!!
         
     }
 

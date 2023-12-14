@@ -26,9 +26,13 @@ public:
 
 	~Logarithm();
 
-	virtual Logarithm* clone() const;
+	Logarithm* clone() const override;
 
 	virtual double operator()(double d) const override;
 
 	operator std::string() const override;
+
+	void set_base(int base);
+
+	Logarithm& operator=(const Logarithm& setAs);
 };

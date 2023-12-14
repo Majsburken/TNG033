@@ -31,7 +31,7 @@ public:
 
     friend Polynomial operator+(Polynomial& lhs, double d);
 
-    Polynomial* clone() const;
+    Polynomial* clone() const override;
 
     //Const, operator() should not modify the calling Polynoimal(?)
     //Function operator() will override the Pure Virtual function declared in base class

@@ -10,6 +10,8 @@
 #include "iomanip"
 #include <format>
 #include <string>
+#include <cmath>
+
 // ADD implementation of the member functions for class Logarithm
 
 //Default Constructor
@@ -19,7 +21,7 @@ Logarithm::Logarithm() : E{ new Polynomial{std::vector<double> {0.0,1.0}} }, c1{
 
 //Copy Constructor
 Logarithm::Logarithm(const Logarithm& L) {
-    (*this).E = L.clone();
+    (*this).E = L.E->clone();
     (*this).c1 = L.c1;
     (*this).c2 = L.c2;
     (*this).b = L.b;
@@ -27,7 +29,7 @@ Logarithm::Logarithm(const Logarithm& L) {
 
 //Constructor, takes in arguments
 Logarithm::Logarithm(Expression& Exp, int cf1, int cf2, int base) {
-    (*this).E = { Exp.clone() };
+    (*this).E = Exp.clone();    
     (*this).c1 = cf1;
     (*this).c2 = cf2;
     (*this).b = base;
@@ -41,11 +43,12 @@ Logarithm::~Logarithm() {
 }
 
 Logarithm* Logarithm::clone() const {
-    return new Logarithm( *this );
+    return new Logarithm(*this);
 }
 
 double Logarithm::operator()(double d) const { //Const, operator() should not modify the calling Polynomial
-    return 0;
+   
+	return c1 + c2 * (log2(E->operator()(d))/ log2(b)); //object E calls operator() with argument d
 }
 
 Logarithm::operator std::string() const {
@@ -66,4 +69,18 @@ Logarithm::operator std::string() const {
     //this p c1 c2 bas
 
     return s;
+}
+
+void Logarithm::set_base(int base) {
+    (*this).b = base;
+}
+
+Logarithm& Logarithm::operator=(const Logarithm& setAs) {
+    delete E;//delete expression first in order to keep the correct count of expressions
+    (*this).E = setAs.E->clone();//clones the expression which creates a new one
+    (*this).c1 = setAs.c1;
+    (*this).c2 = setAs.c2;
+    (*this).b = setAs.b;
+    return *this;
+
 }

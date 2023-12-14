@@ -26,6 +26,8 @@ public:
     //Const, operator() should not modify any Expressions's derived classes (Polynomial, Logarithm)
     //Pure Virtual function, we do not define the function in the base class
     virtual double operator()(double d) const = 0;
+    //virtual double operator=(Expression& e) const = 0;
+
 
     friend std::ostream& operator<<(std::ostream& os, const Expression& e) {
     os << std::string{ e };
@@ -44,6 +46,11 @@ protected:
     Expression() {
         ++count_expressions;
     }
+
+    //returns reference to expression, can only be accessed within superclass and subclasses when protected
+    //not from test.cpp which is outside of the class so it wont compile
+	Expression& operator=(const Expression& rhs) = default; // given by compiler
+
 
     // Copy constructor
     Expression(const Expression&) {
