@@ -19,22 +19,24 @@
 Logarithm::Logarithm() : E{ new Polynomial{std::vector<double> {0.0,1.0}} }, c1{ 0 }, c2{ 1 }, b{ 2 } {
 }
 
-//Copy Constructor
-Logarithm::Logarithm(const Logarithm& L) {
-    (*this).E = L.E->clone();
-    (*this).c1 = L.c1;
-    (*this).c2 = L.c2;
-    (*this).b = L.b;
-}
-
 //Constructor, takes in arguments
+//could arguments be const?
 Logarithm::Logarithm(Expression& Exp, int cf1, int cf2, int base) {
-    (*this).E = Exp.clone();    
+    (*this).E = Exp.clone();//clone to make correct number of expressions?    
     (*this).c1 = cf1;
     (*this).c2 = cf2;
     (*this).b = base;
 }
 
+//Copy Constructor
+Logarithm::Logarithm(const Logarithm& L) {
+    (*this).E = L.E->clone();//clones L's expression
+    (*this).c1 = L.c1;
+    (*this).c2 = L.c2;
+    (*this).b = L.b;
+}
+
+//destructor
 Logarithm::~Logarithm() {
     delete E;
     c1 = 0;
@@ -42,13 +44,17 @@ Logarithm::~Logarithm() {
     b = 0;
 }
 
+//returns pointer to new logarithm which is copy of this
 Logarithm* Logarithm::clone() const {
     return new Logarithm(*this);
 }
 
-double Logarithm::operator()(double d) const { //Const, operator() should not modify the calling Polynomial
-   
+double Logarithm::operator()(const double d) const { //Const, operator() should not modify the calling Polynomial
 	return c1 + c2 * (log2(E->operator()(d))/ log2(b)); //object E calls operator() with argument d
+}
+
+void Logarithm::set_base(int base) {
+    (*this).b = base;
 }
 
 Logarithm::operator std::string() const {
@@ -64,20 +70,14 @@ Logarithm::operator std::string() const {
         
     s += " * Log_" + std::to_string((*this).b) + "( ";
     s += std::string(*E) + " )";
-        //s += " + " + std::format("{:.2f}", (*this).coeffecients[i]);
-
-    //this p c1 c2 bas
 
     return s;
 }
 
-void Logarithm::set_base(int base) {
-    (*this).b = base;
-}
-
+//return reference in order to cascade??
 Logarithm& Logarithm::operator=(const Logarithm& setAs) {
     delete E;//delete expression first in order to keep the correct count of expressions
-    (*this).E = setAs.E->clone();//clones the expression which creates a new one
+    (*this).E = setAs.E->clone();//clones the expression which creates a new one, increases count
     (*this).c1 = setAs.c1;
     (*this).c2 = setAs.c2;
     (*this).b = setAs.b;

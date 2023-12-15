@@ -19,6 +19,9 @@ std::size_t Expression::get_count_expressions() {
 }
 
 /* ************************* */
+
+//Checks whether "possibleRoot" used in function equals to = 0~
+//Returns true/false depending on result
  bool Expression::isRoot(const double possibleRoot) const {
      if (abs((*this)(possibleRoot)) < Epsilon) {
          return true;
@@ -29,12 +32,3 @@ std::size_t Expression::get_count_expressions() {
 //string should not be implemented here, it is a pure virtual function
 
  //operator() should not be implemented here, it is a pure virtual function
-
- //std::ostream& operator<<(std::ostream& os, const Expression& a) {
- //    os << a.string();
- //    return os;
- //}
-
-
-
-

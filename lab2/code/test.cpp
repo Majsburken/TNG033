@@ -395,11 +395,7 @@ int main() {
         Polynomial p2{v2};  // create a polynomial of degree 2
 
         Logarithm l2{p2, 2, 3, 10};
-        assert(Expression::get_count_expressions() == 5);
-
-
-        std::cout << "l2(2): "<< l2(2) << "\n";
-        
+        assert(Expression::get_count_expressions() == 5);     
 
         assert(l2(2) >= 3.4313);
     }
