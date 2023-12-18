@@ -45,7 +45,7 @@ int main() {
     for (int i = 0; i < std::ssize(terms); ++i) {
         power_terms[i] = std::pow(16.0, -power_terms[i]);
     }
-
+    
     double result{0.0};
     for (int i = 0; i < std::ssize(terms); ++i) {
         result += terms[i] * power_terms[i];
