@@ -29,6 +29,11 @@ public:
 	//creates empty instance of polynomial, explicit to avoid implicit type conversions, default compiler implements default constructor
 	explicit Polynomial() = default;
 
+	//Default: Copy constructor, assignment operator and destructor
+	Polynomial(const Polynomial& toBeCopied) = default;
+	Polynomial& operator=(const Polynomial& toAssign) = default;
+	~Polynomial() = default;
+
 	//Constructor, creates Polynomial of a Vector<term>, 'ppairs' aka term -> 'std::pair<int, int>'
 	Polynomial(const std::vector<term>& ppairs);
 
