@@ -63,42 +63,46 @@ int Polynomial::degree() const {
 }
 
 Polynomial& Polynomial::operator+=(const Polynomial& toAdd) {
-
+	//coeff + coeff stored in coefficients_table
 	for (auto it = toAdd.coefficients_table.begin(); it != toAdd.coefficients_table.end(); ++it) {
-		coefficients_table[it->first] += it->second;
+		coefficients_table[it->first] += it->second;//coeff += coeff
 	}
 	Polynomial result;
 
+	//only adds it to result if not 0
 	for (auto it = coefficients_table.begin(); it != coefficients_table.end(); ++it) {
 		if (it->second != 0) {
 			result.coefficients_table[it->first] += it->second;
 		}
 	}
 
-
+	//sets *this to result, zeroes not included
 	return *this = result;
 }
 
 Polynomial& Polynomial::operator-=(const Polynomial& toSubtract) {
 
+	//coeff - coeff stored in coefficients_table
 	for (auto it = toSubtract.coefficients_table.begin(); it != toSubtract.coefficients_table.end(); ++it) {
-		coefficients_table[it->first] -= it->second;
+		coefficients_table[it->first] -= it->second;//coeff-coeff.toSubtract
 	}
 	Polynomial result;
 
+	//only adds it to result if not 0
 	for (auto it = coefficients_table.begin(); it != coefficients_table.end(); ++it) {
 		if (it->second != 0) {
 			result.coefficients_table[it->first] += it->second;
 		}
 	}
 
+	//sets *this to result, zeroes not included
 	return *this = result;
 }
 
 Polynomial& Polynomial::operator*=(const Polynomial& toMultiply) {
 
 	Polynomial result;
-
+	//loops through toMultiply
 	for (auto it = toMultiply.coefficients_table.begin(); it != toMultiply.coefficients_table.end(); ++it) {
 
 		result += multiply_with_term(*it);
@@ -111,9 +115,10 @@ Polynomial& Polynomial::operator*=(const Polynomial& toMultiply) {
 Polynomial Polynomial::multiply_with_term(term termMultiply) {
 	Polynomial result;
 
+	//loops through coefficients_table and multiplies with tearmMultiply
 	for (term currentTerm : coefficients_table) {
-		int degree = currentTerm.first + termMultiply.first;
-		int coeff = currentTerm.second * termMultiply.second;
+		int degree = currentTerm.first + termMultiply.first; //deggree +
+		int coeff = currentTerm.second * termMultiply.second;//coeff *
 
 		result.coefficients_table[degree] = coeff;
 	}
@@ -122,30 +127,19 @@ Polynomial Polynomial::multiply_with_term(term termMultiply) {
 }
 
 bool Polynomial::operator==(const Polynomial& toCompare) const {
-	return coefficients_table == toCompare.coefficients_table;
+	return coefficients_table == toCompare.coefficients_table; //returns true if the same, else false
 }
 
 Polynomial operator*(Polynomial lhs,const Polynomial& toMultiply) {
-	/*Polynomial result;
-
-	for (auto it = toMultiply.coefficients_table.begin(); it != toMultiply.coefficients_table.end(); ++it) {
-
-		result += multiply_with_term(*it);
-	}
-
-	*this = result;
-	return *this;*/
-
 	lhs *= toMultiply;
 	return lhs;
-
-	//return *this *= toMultiply;
 }
 
-
+//<< allows Polynomial to be streamed to output stream cout, override
+//							cout				polynomial
 std::ostream& operator<<(std::ostream& os, const Polynomial& p) {
-	os << std::string{ p };
-	return os;
+	os << std::string{ p }; //writes string representation to output stream
+	return os;//returns that output stream
 }
 
 Polynomial operator+(Polynomial lhs, const Polynomial& toAdd) {

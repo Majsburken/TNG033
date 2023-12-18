@@ -24,17 +24,11 @@ void test(const std::map<std::string, int>& t, const std::vector<std::pair<std::
 
      //auto = std::pair<std::string, int>
 bool compare(const std::pair<std::string, int>& lhs, const std::pair<std::string, int>& rhs) {
-    if (lhs.second == rhs.second) {
-        return lhs.first < rhs.first;
+    if (lhs.second == rhs.second) { 
+        return lhs.first < rhs.first;//sorted by alphabetical order
     }
-    return lhs.second > rhs.second;
+    return lhs.second > rhs.second;//sorted by frequency
 }
-
-
-
-
-
-
 
 int main() {  
     std::cout << "Text file: ";
@@ -54,15 +48,17 @@ int main() {
 
     //ADD CODE to build table
     std::string word;
-    //in_File >> word, skips leading white-spaces, reads char into words until ws, ws after word not read
+    //in_File >> word, skips leading white-spaces, reads char into word until ws, ws after word not read
     //include algorithm for transform
     while (in_File >> word) {
         //              start       end         lagra transformed   vad för transform
         std::transform(word.begin(), word.end(), word.begin(), ::tolower);
+
         //   vad görs               start       end        om det finns c = true
         word.erase(std::remove_if(word.begin(), word.end(), [](char c) {
+            //remove if, if char found -> true, moved to back, returns pointer to end, then erases it.
             //          flyttar punctuations längst back och returnar pointer till första punctuation som vi vill ta bort.
-            //                                                                                                                                  end
+            //                                                                                                                                end
             return c == '.' || c == ',' || c == '!' || c == '?' || c == ':' || c == '/' || c == '"' || c == ')' || c == '(' || c == ';'; }), word.end());
     
         //emplace, som pushback för map
@@ -73,7 +69,7 @@ int main() {
         //Plussar totala ord counter
         counter++;
 
-        //Om word redan finns i table -> pluss counter (för word)
+        //Om word redan finns i table -> plus counter (för word)
         if (table.contains(word)) {
             table[word]++;
         }
@@ -86,7 +82,7 @@ int main() {
 
 
     //copies elements from table begin to end, inserts to back of container freq
-    std::copy(table.begin(), table.end(), std::back_inserter(freq));
+    std::copy(table.begin(), table.end(), std::back_inserter(freq));//can you add to front of vector inserter?
 
     //auto = std::pair<std::string, int>
     //sorts from freq begin to end, comparison cirteria lhs.second > rhs.second
