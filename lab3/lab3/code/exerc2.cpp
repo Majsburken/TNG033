@@ -97,7 +97,7 @@ int main() {
     // }
     /* ************** Testing **************** */
 
-    //test(table, freq, name, counter);
+    test(table, freq, file_name, counter);
 }
 
 
