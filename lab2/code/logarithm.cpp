@@ -22,7 +22,7 @@ Logarithm::Logarithm() : E{ new Polynomial{std::vector<double> {0.0,1.0}} }, c1{
 //Constructor, takes in arguments
 //could arguments be const?
 Logarithm::Logarithm(Expression& Exp, int cf1, int cf2, int base) {
-    (*this).E = Exp.clone();//clone to make correct number of expressions?    
+    E = Exp.clone();//clone to make correct number of expressions?    
     (*this).c1 = cf1;
     (*this).c2 = cf2;
     (*this).b = base;
