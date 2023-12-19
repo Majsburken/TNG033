@@ -26,8 +26,9 @@ Set::Set() : head{new Node{}}, counter{0} {  // create the dummy node
 // Constructor for creating a singleton {x}
 Set::Set(int x) : Set() {
     //Head points at dummy, head->next points at the new Node
-    head->next = new Node(x, nullptr);
-    counter++;
+    insert_after(this->head, x);
+    //head->next = new Node(x, nullptr);
+    //counter++;
 }
 
 // Constructor: create a set with elements
@@ -44,9 +45,10 @@ Set::Set(const std::vector<int>& elements) : Set() {
         while (ptr->next != nullptr) {
             //adds x if it's lesser than the pointer's next value
             if (x < ptr->next->value) {
-                Node* n = new Node(x, ptr->next);
-                ptr->next = n;
-                counter++;
+                //Node* n = new Node(x, ptr->next);
+                insert_after(ptr, x);
+              /*  ptr->next = n;
+                counter++;*/
                 break;
             }
             //increments ptr if greater
@@ -60,8 +62,9 @@ Set::Set(const std::vector<int>& elements) : Set() {
         }
         //adds first element
         if (ptr->next == nullptr) {
-            ptr->next = new Node(x, nullptr);
-            counter++;
+            //ptr->next = new Node(x, nullptr);
+            insert_after(ptr, x);
+            //counter++;
         }
     }
 }
@@ -73,7 +76,8 @@ Set::Set(const Set& rhs) : Set() { //?deep copy?
 
     while (ptr1 != nullptr) {
         //copies ptr1 value into ptr2
-        ptr2->next = new Node(ptr1->value, nullptr);
+        //ptr2->next = new Node(ptr1->value, nullptr);
+        insert_after(ptr2, ptr1->value);
         //increments pointers
         ptr1 = ptr1->next;
         ptr2 = ptr2->next;
@@ -172,34 +176,40 @@ Set Set::set_union(const Set& b) const {
     Set S3{}; //create new empty set
     Node* ptr = head->next; //första noden, inte dummy
     Node* ptrb = b.head->next; //första noden, inte dummy för b
+    Node* ptr3 = S3.head;
 
     //compares the two lists
     while (ptr != nullptr && ptrb != nullptr) {
         if (ptr->value < ptrb->value) {
-            S3.insert_last(ptr->value);//inserts
+            S3.insert_after(ptr3,ptr->value);//inserts
             ptr = ptr->next;//increments
+            ptr3 = ptr3->next;
         }
         else if (ptr->value > ptrb->value) {
-            S3.insert_last(ptrb->value);
+            S3.insert_after(ptr3,ptrb->value);
             ptrb = ptrb->next;
+            ptr3 = ptr3->next;
         }
         else {
-            S3.insert_last(ptrb->value);
+            S3.insert_after(ptr3,ptrb->value);
             ptr = ptr->next;
             ptrb = ptrb->next;
+            ptr3 = ptr3->next;
         }
     }
 
     //adds remainder of first list
     while (ptr != nullptr) {
-        S3.insert_last(ptr->value);
+        S3.insert_after(ptr3,ptr->value);
         ptr = ptr->next;
+        ptr3 = ptr3->next;
     }
 
     //adds remainder of second list
     while (ptrb != nullptr) {
-        S3.insert_last(ptrb->value);
+        S3.insert_after(ptr3,ptrb->value);
         ptrb = ptrb->next;
+        ptr3 = ptr3->next;
     }
     return S3;
 }
@@ -209,6 +219,7 @@ Set Set::set_intersection(const Set& b) const {
     Set S3{};
     Node* ptr = head->next; //första noden, inte dummy
     Node* ptrb = b.head->next; //första noden, inte dummy för b
+    Node* ptr3 = S3.head;
 
     //adds so S3 only if they are the same
     while (ptr != nullptr && ptrb != nullptr) {
@@ -219,9 +230,10 @@ Set Set::set_intersection(const Set& b) const {
             ptrb = ptrb->next;
         }
         else {
-            S3.insert_last(ptrb->value);
+            S3.insert_after(ptr3,ptrb->value);
             ptr = ptr->next;
             ptrb = ptrb->next;
+            ptr3 = ptr3->next;
         }
     }
 
@@ -233,11 +245,13 @@ Set Set::set_difference(const Set& b) const {
     Set S3{};
     Node* ptr = head->next; //första noden, inte dummy
     Node* ptrb = b.head->next; //första noden, inte dummy för b
-
+    Node* ptr3 = S3.head;
     while (ptr != nullptr && ptrb != nullptr) {
         if (ptr->value < ptrb->value) {
-            S3.insert_last(ptr->value);//inserts ptr value if lesser than
+            S3.insert_after(ptr3, ptr->value);//inserts ptr value if lesser than
             ptr = ptr->next; //increments ptr
+            ptr3 = ptr3->next;
+
         }
         else if (ptr->value > ptrb->value) {
             ptrb = ptrb->next;//increments ptrb if ptr greater than
@@ -250,8 +264,9 @@ Set Set::set_difference(const Set& b) const {
 
     //adds remainder of the calling set
     while (ptr != nullptr) {
-        S3.insert_last(ptr->value);
+        S3.insert_after(ptr3,ptr->value);
         ptr = ptr->next;
+        ptr3 = ptr3->next;
     }
     return S3;
 }
@@ -286,20 +301,20 @@ void Set::insert_after(Node* p, int value) {
     }
 }
 
-void Set::insert_last(int value) {
-    Node* ptr = head;
-
-    while (ptr->next != nullptr) {
-        ptr = ptr->next;
-    }
-    if (ptr->next == nullptr) {
-        Node* newNode = new Node;
-        newNode->value = value;
-        newNode->next = ptr->next;
-        ptr->next = newNode;
-        counter++;
-    }
-}
+//void Set::insert_last(int value) {
+//    Node* ptr = head;
+//
+//    while (ptr->next != nullptr) {
+//        ptr = ptr->next;
+//    }
+//    if (ptr->next == nullptr) {
+//        Node* newNode = new Node;
+//        newNode->value = value;
+//        newNode->next = ptr->next;
+//        ptr->next = newNode;
+//        counter++;
+//    }
+//}
 
 void Set::remove(Node* p) {
     Node* ptr1 = p;

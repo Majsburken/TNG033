@@ -219,8 +219,9 @@ int main() {
 
         Set S3{};
         assert(Set::get_count_nodes() == 10);
-
+        
         S3 = S1.set_union(S2);
+        std::cout << "get count nodes:" << Set::get_count_nodes() << std::endl;
         assert(Set::get_count_nodes() == 16);
 
         assert(S3.cardinality() == 6);
