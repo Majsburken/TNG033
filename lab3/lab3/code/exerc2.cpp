@@ -70,9 +70,8 @@ int main() {
         counter++;
 
         //Om word redan finns i table -> plus counter (för word)
-        if (table.contains(word)) {
-            table[word]++;
-        }
+        table[word]++;
+
 
     }
 

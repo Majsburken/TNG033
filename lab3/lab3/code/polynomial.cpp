@@ -13,7 +13,10 @@
 
 
 //Constructor
-Polynomial::Polynomial(const int deg, const int coeff) : coefficients_table{ {deg,coeff} } {
+Polynomial::Polynomial(const int deg, const int coeff) {
+	if (coeff != 0) {
+		coefficients_table = {{deg,coeff}};
+	};
 }
 
 Polynomial::Polynomial(const int i): coefficients_table{{0,i}}{
@@ -66,18 +69,13 @@ Polynomial& Polynomial::operator+=(const Polynomial& toAdd) {
 	//coeff + coeff stored in coefficients_table
 	for (auto it = toAdd.coefficients_table.begin(); it != toAdd.coefficients_table.end(); ++it) {
 		coefficients_table[it->first] += it->second;//coeff += coeff
-	}
-	Polynomial result;
 
-	//only adds it to result if not 0
-	for (auto it = coefficients_table.begin(); it != coefficients_table.end(); ++it) {
-		if (it->second != 0) {
-			result.coefficients_table[it->first] += it->second;
-		}
+			if (coefficients_table[it->first] == 0) {
+				coefficients_table.erase(it->first);
+			}
 	}
-
-	//sets *this to result, zeroes not included
-	return *this = result;
+	
+	return *this;
 }
 
 Polynomial& Polynomial::operator-=(const Polynomial& toSubtract) {
@@ -85,18 +83,21 @@ Polynomial& Polynomial::operator-=(const Polynomial& toSubtract) {
 	//coeff - coeff stored in coefficients_table
 	for (auto it = toSubtract.coefficients_table.begin(); it != toSubtract.coefficients_table.end(); ++it) {
 		coefficients_table[it->first] -= it->second;//coeff-coeff.toSubtract
+		if (coefficients_table[it->first] == 0) {
+			coefficients_table.erase(it->first);
+		}
 	}
 	Polynomial result;
 
-	//only adds it to result if not 0
-	for (auto it = coefficients_table.begin(); it != coefficients_table.end(); ++it) {
-		if (it->second != 0) {
-			result.coefficients_table[it->first] += it->second;
-		}
-	}
+	////only adds it to result if not 0
+	//for (auto it = coefficients_table.begin(); it != coefficients_table.end(); ++it) {
+	//	if (it->second != 0) {
+	//		result.coefficients_table[it->first] += it->second;
+	//	}
+	//}
 
 	//sets *this to result, zeroes not included
-	return *this = result;
+	return *this;
 }
 
 Polynomial& Polynomial::operator*=(const Polynomial& toMultiply) {
