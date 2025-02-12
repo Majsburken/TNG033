@@ -1,0 +1,12 @@
+** Test 1: Create some lists with add_last
+
+List L1: 2 4 6 -1
+List L2: -2 -4 -6
+
+** Test 2: move_to_begin
+
+List L0: The list is empty!!
+List L1: 6 2 4 -1
+List L1: -1 6 2 4
+List L2: -2 -4 -6
+List L2: -2 -4 -6

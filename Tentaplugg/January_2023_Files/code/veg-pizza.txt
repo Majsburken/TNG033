@@ -1,0 +1,6 @@
+saturated_fat 10
+cholesterol 4
+carbohydrates 5
+vitamin_a 5
+vitamin_c 10
+protein 21

@@ -1,0 +1,23 @@
+Gus eats Vegetarian Pizza.
+Gus eats Calzone.
+Gus eats Ham Pizza roll.
+Gus eats Vegetarian Pizza roll.
+Gus eats Salad.
+
+Sally eats Vegetarian Pizza.
+Sally does not want Calzone.
+Sally does not want Ham Pizza roll.
+Sally does not want Vegetarian Pizza roll.
+Sally eats Salad.
+
+Peter eats Vegetarian Pizza.
+Peter does not want Calzone.
+Peter does not want Ham Pizza roll.
+Peter does not want Vegetarian Pizza roll.
+Peter eats Salad.
+
+Velma eats Vegetarian Pizza.
+Velma does not want Calzone.
+Velma does not want Ham Pizza roll.
+Velma does not want Vegetarian Pizza roll.
+Velma does not want Salad.
